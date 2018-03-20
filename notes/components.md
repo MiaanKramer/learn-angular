@@ -2,11 +2,9 @@
 
 `TODO: add notes here about Angular's Component architecture`
 
-
-## `@Component` Annotation
+## @**Component** Annotation
 
 `TODO: give an example of a Component and describe each attribute`
-
 
 ## Lifecycle
 
