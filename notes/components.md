@@ -406,6 +406,118 @@ export class HeroesComponent implements OnInit {
 }
 ```
 
+# Master/Detail Components
+
+- Refactor Master/Detail component into smaller more maintanable components
+
+- Each component focuseed on a spesific task
+
+## Make the HeroDetailComponent
+
+`Console`
+```sh
+ng generate component hero-detail
+```
+
+## Write the template
+`hero-detail.component.html`
+```HTML
+<div *ngIf="hero">
+	<h2>{{ hero.name  | uppercase}} Details</h2>
+	<div><span>id: </span>{{hero.id}}</div>
+	<div>
+		<label> name: 
+			<input [(ngModel)]="hero.name" placeholder="name"/> 
+		</label>
+	</div>
+</div>
+```
+
+## Add the @Input( ) hero property
+`hero-detail.component.ts`
+```TypeScript
+
+import { Component, OnInit, Input} from '@angular/core';
+/** Amend the @angular/core import statement to include the Input symbol. */
+import { Hero } from '../hero';
+
+@Component({
+  selector: 'app-hero-detail',
+  templateUrl: './hero-detail.component.html',
+  styleUrls: ['./hero-detail.component.css']
+})
+export class HeroDetailComponent implements OnInit {
+	/**  Add a hero property */
+	@Input() hero: Hero;
+
+	constructor() { }
+
+	ngOnInit() {
+	}
+
+}
+```
+
+## Show the HeroDetailComponent
+`heroes.compoentn.html`
+```HTML
+<app-hero-detail [hero]="selectedHero"></app-hero-detail>
+```
+
+## Final code review
+
+`hero-detail.component.ts`
+```ts
+import { Component, OnInit, Input } from '@angular/core';
+import { Hero } from '../hero';
+ 
+@Component({
+  selector: 'app-hero-detail',
+  templateUrl: './hero-detail.component.html',
+  styleUrls: ['./hero-detail.component.css']
+})
+export class HeroDetailComponent implements OnInit {
+  @Input() hero: Hero;
+ 
+  constructor() { }
+ 
+  ngOnInit() {
+  }
+ 
+}
+```
+
+`hero-detail.component.html`
+```HTML
+<div *ngIf="hero">
+
+  <h2>{{ hero.name | uppercase }} Details</h2>
+  <div><span>id: </span>{{hero.id}}</div>
+  <div>
+    <label>name:
+      <input [(ngModel)]="hero.name" placeholder="name"/>
+    </label>
+  </div>
+
+</div>
+```
+
+`heroes.component.html`
+```HTML
+<h2>My Heroes</h2>
+
+<ul class="heroes">
+  <li *ngFor="let hero of heroes"
+    [class.selected]="hero === selectedHero"
+    (click)="onSelect(hero)">
+    <span class="badge">{{hero.id}}</span> {{hero.name}}
+  </li>
+</ul>
+
+<app-hero-detail [hero]="selectedHero"></app-hero-detail>
+```
+
+
 
 
 
